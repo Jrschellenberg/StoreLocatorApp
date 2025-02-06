@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "@Shared": ["src/shared"],
+      "@Constants": ["src/constants.js"],
+      "@Helpers": ["src/helpers"],
+      "globalStyles":  ["scss"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

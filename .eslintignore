@@ -1,0 +1,11 @@
+.babelrc
+.babelrc.js
+babel.config.js
+jest.config.js
+*.json
+node_modules/
+polyfills/
+webpack.config.js
+setupTests.js
+webstorm.js
+jsconfig.json

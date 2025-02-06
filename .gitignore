@@ -1,0 +1,11 @@
+*___jb_old___*
+*___jb_tmp___*
+.DS_Store
+.idea/
+.vscode/
+node_modules/
+!yarn.lock
+*.cache*
+*.bundle.*
+!*.bundle.min.*
+.env

@@ -14,7 +14,7 @@
     "lint": "eslint src --ext .js --ext .jsx --fix",
     "build": "npm run stage && npm run browsersync",
     "stage": "cross-env NODE_ENV=production webpack -p --progress",
-    "production": "cross-env NODE_ENV=production PROD_URL=production webpack -p --progress",
+    "production": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=production PROD_URL=production webpack -p --progress",
     "bhelp": "webpack --help"
   },
   "keywords": [

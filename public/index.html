@@ -11,8 +11,68 @@
 
     <link rel="stylesheet" href="../stylesheets/fnd.app.bundle.css" />
     <script defer src="../js/fnd.app.bundle.js"></script>
-
   </head>
+
+   <script>
+
+   document.addEventListener("DOMContentLoaded", async function() {
+         async function fetchWebflowData() {
+
+            // Store data in FND.BUILDS.StoreLocatorData
+            const FND = (window.FND = window.FND || {});
+            FND.BUILDS = FND.BUILDS || {};
+
+             const API_URL = "https://corsproxy.firenetdesigns.ca/.netlify/functions/server/proxy?url=https://api.webflow.com/v2/collections/67a5103efb90f7403255849d/items/live";
+             const API_KEY = "86a25354f8b16094868e08e53f991415746f060df8c3f7a63af5ca7c270ed207";
+
+
+             if(sessionStorage.getItem('fnd-locations')){
+                FND.BUILDS.StoreLocatorData = JSON.parse(sessionStorage.getItem('fnd-locations'));
+                return;
+              }
+
+
+
+
+             try {
+                 const response = await fetch(API_URL, {
+                     method: "GET",
+                     headers: {
+                         "Authorization": `Bearer ${API_KEY}`,
+                         "Content-Type": "application/json"
+                     }
+                 });
+
+                 if (!response.ok) {
+                     throw new Error(`HTTP error! Status: ${response.status}`);
+                 }
+
+                 const data = await response.json();
+
+                 // Filter items to keep only those where isArchived and isDraft are false
+                 const filteredLocations = data.items
+                     .filter(item => !item.isArchived && !item.isDraft)
+                     .map(item => item.fieldData);
+
+
+                 FND.BUILDS.StoreLocatorData = {filteredLocations};
+                 sessionStorage.setItem('fnd-locations', JSON.stringify({filteredLocations}));
+
+                 console.log("Filtered Locations:", filteredLocations);
+             } catch (error) {
+                 console.error("Error fetching Webflow data:", error);
+             }
+         }
+
+         // Run the function
+         await fetchWebflowData();
+         if(window.FND && window.FND.BUILDS && window.FND.BUILDS.InitializeStoreLocator){
+           window.FND.BUILDS.InitializeStoreLocator(FND.BUILDS.StoreLocatorData);
+         }
+
+   });
+   </script>
+
 
   <body>
     <div id="root"></div>
